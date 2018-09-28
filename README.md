@@ -13,3 +13,5 @@ User stories:
 • If a user swipes a sword, it'll appear in front of their character, in the direction they're currently facing.
 
 • When a sword is swiped, it will wipe out any non-permanent objects (AKA whatever isn't a wall).
+
+https://github.com/images/logo.png
