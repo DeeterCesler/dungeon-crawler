@@ -1,9 +1,15 @@
 # Dungeon Crawler
 Crawl through a dungeon. Slay enemies. Find treasure.
 
-
-User stories:
 # MVP
+
+***Wireframe***
+![Stage 1](https://i.imgur.com/gHrv9N2.png)
+![Stage 2](https://i.imgur.com/NYypZhl.png)
+
+
+***User stories***
+
 • Make a grid
 
 • The grid is default a floor, with walls preventing movement
@@ -13,5 +19,3 @@ User stories:
 • If a user swipes a sword, it'll appear in front of their character, in the direction they're currently facing.
 
 • When a sword is swiped, it will wipe out any non-permanent objects (AKA whatever isn't a wall).
-
-![Weird Shit](https://i.imgur.com/zP0RC9K.jpg)
