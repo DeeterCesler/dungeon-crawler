@@ -14,4 +14,4 @@ User stories:
 
 • When a sword is swiped, it will wipe out any non-permanent objects (AKA whatever isn't a wall).
 
-https://github.com/images/logo.png
+[link to Google!](http://google.com)
