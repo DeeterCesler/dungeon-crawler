@@ -46,11 +46,15 @@ const hero = {
                 $(`${swordLocation} .breakable-wall`).remove();
                 if($(`${swordLocation} .enemy`).length){
                     $(`${swordLocation} .enemy`).remove();
-                    $(`${swordLocation} .enemy`).remove();
-                    function stopMoving () {
-                        clearInterval(baddo1move)   
-                    };
-                    stopMoving();
+                    // $(`${swordLocation} #baddo`).remove();
+                    // function stopMoving () {
+                    //     clearInterval(baddo1move)   
+                    // };
+                    // stopMoving();
+                    // how to clear the interval of an object in an element
+                    // how to call the object attached to an element
+                    // maybe I give the enemy a unique ID that changes as they move
+                    // and then I use that unique ID to clear the interval
                 }
                 if($(`#row${hero.y}column${hero.x-1} .holder .breakable-wall`).length || $(`#row${hero.y}column${hero.x-1} .holder .wall`).length){
                     console.log("that's a wall");
@@ -209,7 +213,6 @@ controls();
 
 // $("#row7column3 .holder").append("<div class='breakable-wall'></div>")
 
-
 fruitPosition = $("#fruit").parent().parent().attr("id");
 
 const gameOver = () => {
@@ -360,9 +363,10 @@ const stage2 = ()=>{
 
     // make enemy
     $(`#row4column9 .holder`).append("<div class='enemy'></div>")
-    baddo1move = setInterval(function(){
-        baddo1.move();
-    }, 2000);
+    // $(`#row12column8 .holder`).append("<div class='enemy'></div>")
+    // baddo1move = setInterval(function(){
+    //     baddo1.move();
+    // }, 2000);
 };
 
 stage1();
@@ -377,25 +381,27 @@ class Enemy {
     constructor(x, y){
         this.x = x;
         this.y = y;
-        this.alive = true;
+        $(`#row${y}column${x} .holder`).append("<div class='enemy'></div>")
     }
     move(){
         // function findRandomDirection (){
-            const randomDirectionNum = Math.floor(Math.random() * 4);
-            if(randomDirectionNum === 3){
-                this.direction = "up"
-            }
-            if(randomDirectionNum === 2){
-                this.direction = "down"
-            }
-            if(randomDirectionNum === 1){
-                this.direction = "left"
-            }
-            if(randomDirectionNum === 0){
-                this.direction = "right"
-            }
-        // }
+        const randomDirectionNum = Math.floor(Math.random() * 4);
+        if(randomDirectionNum === 3){
+            this.direction = "up"
+        }
+        if(randomDirectionNum === 2){
+            this.direction = "down"
+        }
+        if(randomDirectionNum === 1){
+            this.direction = "left"
+        }
+        if(randomDirectionNum === 0){
+            this.direction = "right"
+        }
         // function setOrientation(){
+        if($(`#row${this.y}column${this.x} .enemy`).length > 0){
+            console.log(`#row${this.y}column${this.x} .enemy`);
+            $(`#row${this.y}column${this.x} .enemy`).remove();
             if(this.direction === "left"){
                 this.y--;
                 if($(`#row${this.y}column${this.x} .holder .breakable-wall`).length || $(`#row${this.y}column${this.x} .holder .wall`).length){
@@ -420,23 +426,40 @@ class Enemy {
                     this.x--;
                 }
             }
-        // }
-        // findRandomDirection();
-        // setOrientation();
-        // move one forward in the direction it's facing
-        $(".enemy").remove();
-        let newEnemyPosition = "#row" + this.y + "column" + this.x;
-        $(`${newEnemyPosition} .holder`).append("<div class='enemy'></div>");
-        // // code below removes the sword so that if you walk forward into it, 
-        // // it doesn't fuck up the whole grid
-        // if($(`${newPosition} #sword`).length > 0){
-        //     $(`#sword`).remove();
-        // }
-        // enemy randomly finds a new space relative to its old position
+            // new position
+            let newEnemyPosition = "#row" + this.y + "column" + this.x;
+            $(`${newEnemyPosition} .holder`).append(`<div class='enemy' id='baddo${this.y}${this.x}'></div>`);
+        }
     }
 };
 
-const baddo1 = new Enemy(9,4);
+// the block of code for calling a new enemy, 
+// and the function to let him move (if he's still alive)
+const baddo1 = new Enemy(9,8);
+baddo1move = setInterval(function(){
+    baddo1.move();
+    if($(`#row${baddo1.y}column${baddo1.x} .enemy`).length > 0){
+        console.log("baddo1 alive")
+        baddo1move;
+    }
+}, 2000);
+
+const baddo2 = new Enemy(9,10);
+baddo2move = setInterval(function(){
+    baddo2.move();
+    if($(`#row${baddo2.y}column${baddo2.x} .enemy`).length > 0){
+        console.log("baddo1 alive")
+        baddo2move;
+    }
+}, 1500);
+
+// const baddo2 = new Enemy(12,8);
+// baddo2move = setTimeout(function(){
+//     baddo2.move();
+//     if($(`#row${baddo2.y}column${baddo2.x} .enemy`).length > 0){
+//         baddo2move;
+//     }
+// }, 2000);
 
 // enemyCheck(location){
 //     if()
