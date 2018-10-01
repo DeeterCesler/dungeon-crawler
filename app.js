@@ -217,6 +217,7 @@ fruitPosition = $("#fruit").parent().parent().attr("id");
 
 const gameOver = () => {
     $(".grid").empty();
+    $(".grid").append("<br />")
     $(".grid").append("<h1>GAME OVER</h1>");
     $(".grid").append(`<h3>You got to level ${level}.</h3>`);
     $(".grid").append(`<h3>You got a score of ${score}.</h3>`);
@@ -244,8 +245,8 @@ const scoreCounter = () => {
 }
 
 const enemyCheck = () => {
-    if(escapePosition === newEnemyPosition + " .holder"){
-        $("#snake-head").remove();
+    if(newEnemyPosition === "#" + $("#snake-head").parent().parent().attr("id")){
+        console.log("samesies");
         gameOver();
     }
 };
@@ -373,7 +374,7 @@ stage1();
 
 
 // ==========================================================================
-// ======================= Trying to make an enemy ==========================
+// ============================ Making enemies ==============================
 // ==========================================================================
 
 
@@ -429,6 +430,10 @@ class Enemy {
             // new position
             let newEnemyPosition = "#row" + this.y + "column" + this.x;
             $(`${newEnemyPosition} .holder`).append(`<div class='enemy' id='baddo${this.y}${this.x}'></div>`);
+            if(newEnemyPosition === "#" + $("#snake-head").parent().parent().attr("id")){
+                console.log("samesies");
+                gameOver();
+            }
         }
     }
 };
