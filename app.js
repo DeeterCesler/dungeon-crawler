@@ -301,7 +301,7 @@ class Enemy {
             // these checks make sure the enemies don't walk through a wall, coin, escape portal, or off the map
             if(this.direction === "left"){
                 this.y--;
-                if($(`#row${this.y}column${this.x} .holder .breakable-wall`).length || $(`#row${this.y}column${this.x} .holder .wall`).length || $(`#row${this.y}column${this.x} .holder .enemy`).length || $(`#row${this.y}column${this.x} .holder .escape`).length || $(`#row${this.y}column${this.x} .holder .coin`).length || this.y === (maxHeight+1) || this.x === (maxWidth+1)) {
+                if($(`#row${this.y}column${this.x} .holder .breakable-wall`).length || $(`#row${this.y}column${this.x} .holder .wall`).length || $(`#row${this.y}column${this.x} .holder .enemy`).length || $(`#row${this.y}column${this.x} .holder .escape`).length || $(`#row${this.y}column${this.x} .holder .coin`).length || this.y < 0 || this.x === (maxWidth+1)) {
                     this.y++;
                 }
             }
@@ -313,7 +313,7 @@ class Enemy {
             }
             if(this.direction === "up"){
                 this.x--;
-                if($(`#row${this.y}column${this.x} .holder .breakable-wall`).length || $(`#row${this.y}column${this.x} .holder .wall`).length || $(`#row${this.y}column${this.x} .holder .enemy`).length || $(`#row${this.y}column${this.x} .holder .escape`).length || $(`#row${this.y}column${this.x} .holder .coin`).length || this.y === (maxHeight+1) || this.x === (maxWidth+1)) {
+                if($(`#row${this.y}column${this.x} .holder .breakable-wall`).length || $(`#row${this.y}column${this.x} .holder .wall`).length || $(`#row${this.y}column${this.x} .holder .enemy`).length || $(`#row${this.y}column${this.x} .holder .escape`).length || $(`#row${this.y}column${this.x} .holder .coin`).length || this.y === (maxHeight+1) || this.x < 0 ) {
                     this.x++;
                 }
             }
@@ -430,8 +430,8 @@ const stage1 = () => {
     for(let i=16; i<21; i++){
         $(`#row${i}column16 .holder`).append("<div class='wall'></div>")
     }
-    // escape door
-    escapePosition = "#row18column18 .holder";
+    // escape door - normally at row18col18
+    escapePosition = "#row1column1 .holder";
     $(escapePosition).append("<div class='escape'></div>")
     imageFill();
 };
@@ -439,26 +439,18 @@ const stage1 = () => {
 stage1();
 
 const stage2 = ()=>{
-    // top row
+    // // top row
     // for(let i=0; i<17; i++){
     //     $(`#row${i}column3 .holder`).append("<div class='wall'></div>")
     // };
-    // // next row 
-    // for(let i=maxWidth; i>2; i--){
-    //     $(`#row${i}column6 .holder`).append("<div class='wall'></div>")
-    // };
-    // // wall along left
-    // for(let i=7; i<17; i++){
-    //     $(`#row3column${i} .holder`).append("<div class='wall'></div>")
-    // };
-    // // breakable walls
-    // for(let i=0; i<3; i++){
-    //     $(`#row${i}column10 .holder`).append("<div class='breakable-wall'></div>")
-    // }
-    // // walls
-    // for(let i=19; i>8; i--){
-    //     $(`#row6column${i} .holder`).append("<div class='wall'></div>")
-    // }
+    // next row 
+    for(let i=(maxWidth-1); i>9; i--){
+        $(`#row${i}column1 .holder`).append("<div class='wall'></div>")
+    };
+    for(let i=2; i<12; i++){
+        $(`#row18column${i} .holder`).append("<div class='wall'></div>")
+    };
+    // walls
     for(let i=0; i<8; i++){
         $(`#row8column${i} .holder`).append("<div class='wall'></div>")
     }
@@ -487,6 +479,16 @@ const stage2 = ()=>{
         $("#row5column8 .holder").append("<div class='coin'></div>")
         $("#row5column9 .holder").append("<div class='coin'></div>")
         $("#row5column10 .holder").append("<div class='coin'></div>")
+
+        // wall coins
+        for(let i=(maxWidth-1); i>9; i--){
+            $(`#row${i}column0 .holder`).append("<div class='coin'></div>")
+        };
+        for(let i=1; i<12; i++){
+            $(`#row19column${i} .holder`).append("<div class='coin'></div>")
+        };
+
+
     // walled-in escape - top wall
     for(let i=16; i<21; i++){
         $(`#row16column${i} .holder`).append("<div class='breakable-wall'></div>")
@@ -508,7 +510,8 @@ const stage2 = ()=>{
     }
     }, 1500);
 
-    const baddo5 = new Enemy(maxHeight,maxWidth);
+    // enemy next to escape
+    const baddo5 = new Enemy(17,17);
     baddo5move = setInterval(function(){
     baddo5.move();
     if($(`#row${baddo5.y}column${baddo5.x} .enemy`).length > 0){
@@ -516,6 +519,58 @@ const stage2 = ()=>{
         baddo5move;
     }
     }, 1500);
+
+    // enemy in bottom left corner
+    const baddo6 = new Enemy(0,maxHeight);
+    baddo6move = setInterval(function(){
+    baddo6.move();
+    if($(`#row${baddo6.y}column${baddo6.x} .enemy`).length > 0){
+        console.log("baddo4 alive")
+        baddo6move;
+    }
+    }, 1500);
+
+    // enemy in top right corner
+    const baddo7 = new Enemy(maxWidth,0);
+    baddo7move = setInterval(function(){
+    baddo7.move();
+    if($(`#row${baddo7.y}column${baddo7.x} .enemy`).length > 0){
+        console.log("baddo4 alive")
+        baddo7move;
+    }
+    }, 1500);
+    $("#row0column18 .holder").append("<div class='coin'></div>")
+    $("#row1column18 .holder").append("<div class='coin'></div>")
+    $("#row1column19 .holder").append("<div class='coin'></div>")
+
+    // enemies in center
+    const baddo8 = new Enemy(5,13);
+    baddo8move = setInterval(function(){
+    baddo8.move();
+    if($(`#row${baddo8.y}column${baddo8.x} .enemy`).length > 0){
+        console.log("baddo4 alive")
+        baddo8move;
+    }
+    }, 1500);
+
+    const baddo9 = new Enemy(9,13);
+    baddo9move = setInterval(function(){
+    baddo9.move();
+    if($(`#row${baddo9.y}column${baddo9.x} .enemy`).length > 0){
+        console.log("baddo4 alive")
+        baddo9move;
+    }
+    }, 1500);
+
+    const baddo10 = new Enemy(13,13);
+    baddo10move = setInterval(function(){
+    baddo10.move();
+    if($(`#row${baddo10.y}column${baddo10.x} .enemy`).length > 0){
+        console.log("baddo4 alive")
+        baddo10move;
+    }
+    }, 1500);
+
 
     // escape door
     escapePosition = "#row18column18 .holder";
