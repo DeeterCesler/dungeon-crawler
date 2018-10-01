@@ -27,7 +27,7 @@ div {
 }
 
 .coin{
-    background-color: yellow;
+    /* background-image: url("img/coin.png"); */
     height: 20px;
     width: 20px;
 }
@@ -67,7 +67,7 @@ h1, h2, h3 {
 }
 
 .enemy {
-    background-color: red;
+    /* background-color: red; */
     height: 20px;
     width: 20px;
 }
