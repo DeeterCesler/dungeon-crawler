@@ -65,7 +65,6 @@ const hero = {
                 // the sword won't show up twice in the same block
                 else if($(`${swordLocation} #sword`).length === 0){
                     $(swordLocation).append("<img id='sword' src='img/sword.png'>");
-                    // enemyCheck(swordLocation);
                     // sword in front of you
                     setTimeout(function(){
                         // function to remove sword
@@ -202,6 +201,8 @@ const controls = () => {
         scoreCounter();
         escapeCheck();
         enemyCheck();
+        // console.log($(".enemy").parent().parent().attr("id"));
+        // console.log($("#snake-head").parent())
     })
 }
       
@@ -222,6 +223,7 @@ const gameOver = () => {
     $(".grid").append("<br />")
     $(".grid").append("<h1>GAME OVER</h1>");
     $(".grid").append(`<h3>You got to level ${level}.</h3>`);
+    $(".grid").append(`<h3>You killed ${enemiesKilled} enemies.</h3>`);
     $(".grid").append(`<h3>You got a score of ${score}.</h3>`);
 }
 
@@ -247,8 +249,8 @@ const scoreCounter = () => {
 }
 
 const enemyCheck = () => {
-    if(newEnemyPosition === "#" + $("#snake-head").parent().parent().attr("id")){
-        console.log("samesies");
+    if($("#snake-head").siblings().is(".enemy")){
+    console.log("samesies");
         gameOver();
     }
 };
@@ -299,7 +301,7 @@ const stage1 = () => {
         $(`#row${i}column16 .holder`).append("<div class='breakable-wall'></div>")
     }
     // escape door
-    escapePosition = "#row1column5 .holder";
+    escapePosition = "#row18column18 .holder";
     $(escapePosition).append("<div class='escape'></div>")
 };
 
@@ -314,7 +316,7 @@ const clearStage = () => {
 };
 
 const stage2 = ()=>{
-    console.log("you win");
+    console.log("NEXT LEVEL");
     clearStage();
     // top row
     // for(let i=0; i<17; i++){
@@ -365,7 +367,14 @@ const stage2 = ()=>{
     }
 
     // make enemy
-    $(`#row4column9 .holder`).append("<div class='enemy'></div>")
+    const baddo4 = new Enemy(9,4);
+    baddo4move = setInterval(function(){
+    baddo4.move();
+    if($(`#row${baddo4.y}column${baddo4.x} .enemy`).length > 0){
+        console.log("baddo4 alive")
+        baddo4move;
+    }
+}, 1500);
     // $(`#row12column8 .holder`).append("<div class='enemy'></div>")
     // baddo1move = setInterval(function(){
     //     baddo1.move();
@@ -403,7 +412,6 @@ class Enemy {
         }
         // function setOrientation(){
         if($(`#row${this.y}column${this.x} .enemy`).length > 0){
-            console.log(`#row${this.y}column${this.x} .enemy`);
             $(`#row${this.y}column${this.x} .enemy`).remove();
             if(this.direction === "left"){
                 this.y--;
@@ -446,7 +454,6 @@ const baddo1 = new Enemy(9,8);
 baddo1move = setInterval(function(){
     baddo1.move();
     if($(`#row${baddo1.y}column${baddo1.x} .enemy`).length > 0){
-        console.log("baddo1 alive")
         baddo1move;
     }
 }, 2000);
@@ -455,7 +462,6 @@ const baddo2 = new Enemy(9,10);
 baddo2move = setInterval(function(){
     baddo2.move();
     if($(`#row${baddo2.y}column${baddo2.x} .enemy`).length > 0){
-        console.log("baddo2 alive")
         baddo2move;
     }
 }, 1500);
@@ -464,22 +470,9 @@ const baddo3 = new Enemy(12,10);
 baddo3move = setInterval(function(){
     baddo3.move();
     if($(`#row${baddo3.y}column${baddo3.x} .enemy`).length > 0){
-        console.log("baddo3 alive")
         baddo3move;
     }
 }, 1500);
-
-// const baddo2 = new Enemy(12,8);
-// baddo2move = setTimeout(function(){
-//     baddo2.move();
-//     if($(`#row${baddo2.y}column${baddo2.x} .enemy`).length > 0){
-//         baddo2move;
-//     }
-// }, 2000);
-
-// enemyCheck(location){
-//     if()
-// };
 
 
 // const move = () => {
