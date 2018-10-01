@@ -24,6 +24,7 @@ buildGrid(20,20);
 
 let score = 0;
 let level = 1;
+let enemiesKilled = 0;
 let newEnemyPosition;
 // $("body").append(`<div class='score'>${score}</div>`)
 // let timer = 20;
@@ -42,10 +43,11 @@ const hero = {
                 // uselessVar++;
             }
             else{
-                $(`${swordLocation} #fruit`).remove();
+                $(`${swordLocation} #coin`).remove();
                 $(`${swordLocation} .breakable-wall`).remove();
                 if($(`${swordLocation} .enemy`).length){
                     $(`${swordLocation} .enemy`).remove();
+                    enemiesKilled++;
                     // $(`${swordLocation} #baddo`).remove();
                     // function stopMoving () {
                     //     clearInterval(baddo1move)   
@@ -101,7 +103,7 @@ const hero = {
 // start 
 
 let newPosition = "#row0column0";
-let fruitPosition;
+let coinPosition;
 
 $(`${newPosition} .holder`).append("<div id='snake-head'><img src='img/arrow-right.jpg'></div>");
 
@@ -205,15 +207,15 @@ const controls = () => {
       
 controls();
 
-// placing fruit on the map
+// placing coin on the map
 
-// $("#row15column3 .holder").append("<div id='fruit'></div>")
+// $("#row15column3 .holder").append("<div id='coin'></div>")
 
 // placing walls on the map
 
 // $("#row7column3 .holder").append("<div class='breakable-wall'></div>")
 
-fruitPosition = $("#fruit").parent().parent().attr("id");
+coinPosition = $("#coin").parent().parent().attr("id");
 
 const gameOver = () => {
     $(".grid").empty();
@@ -224,21 +226,21 @@ const gameOver = () => {
 }
 
 
-const newFruitPosition = () => {
+const newCoinPosition = () => {
     const randomRow = Math.floor(Math.random() * (maxWidth +1));
     const randomColumn = Math.floor(Math.random() * (maxHeight+1));
-    fruitPosition = "row" + randomRow + "column" + randomColumn;
-    if("#" + fruitPosition === newPosition){
-        newFruitPosition();
+    coinPosition = "row" + randomRow + "column" + randomColumn;
+    if("#" + coinPosition === newPosition){
+        newCoinPosition();
     }
-    else {$(`#${fruitPosition} .holder`).append("<div id='fruit'></div>")}
+    else {$(`#${coinPosition} .holder`).append("<div id='coin'></div>")}
 }
 
 const scoreCounter = () => {
-    if("#" + fruitPosition === newPosition){
+    if("#" + coinPosition === newPosition){
         score++;
-        $("#fruit").remove();
-        newFruitPosition();
+        $("#coin").remove();
+        newCoinPosition();
         // $(".score").empty();
         // $(".score").html(`<div class='score'>${score}</score>`);
     }
@@ -266,7 +268,7 @@ const escapeCheck = () => {
 // move a snake around the screen
 // Make it die if it hits a wall
 // Make it die if it hits itself
-// make it grow if it eats a fruit
+// make it grow if it eats a coin
 // Figure out a way to vary the grid sizes
 
 $("body").prepend("<h2>Use W, A, S, and D to move. <br/> Press space to attack. <br /> <br/> Collect coins, avoid (or fight) enemies, <br/> and escape through the purple door!</h2>")
