@@ -22,6 +22,9 @@ const buildGrid = (height, width) => {
 const imageFill = () => {
     $(".coin").append("<img src='img/coin.png'>");
     $(".enemy").append("<img src='img/skeleton'>");
+    $(".wall").append("<img src='img/wall.png'>");
+    $(".breakable-wall").append("<img src='img/broken-wall.png'>");
+    $(".escape").append("<img src='img/door.png'>");
 }
 
 // ====================
@@ -262,7 +265,7 @@ const escapeCheck = () => {
 // =============================================================
 
 
-$("body").prepend("<h2>Use W, A, S, and D to move. <br/> Press space to attack. <br /> <br/> Collect coins, avoid (or fight) enemies, <br/> and escape through the purple door!</h2>")
+$(".instructions").append("<h2>Use W, A, S, and D to move. <br/> Press space to attack. <br /> <br/> Collect coins, avoid (or fight) enemies, <br/> and escape through the door.</h2>")
 
 
 // =============================================================
@@ -420,12 +423,12 @@ const stage1 = () => {
         $(`#row10column${i} .holder`).append("<div class='breakable-wall'></div>")
     }
     // walled-in escape - top wall
-    for(let i=16; i<21; i++){
+    for(let i=17; i<21; i++){
         $(`#row16column${i} .holder`).append("<div class='breakable-wall'></div>")
     }
     // walled-in escape - side wall
-    for(let i=17; i<21; i++){
-        $(`#row${i}column16 .holder`).append("<div class='breakable-wall'></div>")
+    for(let i=16; i<21; i++){
+        $(`#row${i}column16 .holder`).append("<div class='wall'></div>")
     }
     // escape door
     escapePosition = "#row18column18 .holder";
