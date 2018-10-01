@@ -198,11 +198,9 @@ const controls = () => {
         if(keyName === " "){
             hero.attack();
         }
-        scoreCounter();
+        coinCheck();
         escapeCheck();
         enemyCheck();
-        // console.log($(".enemy").parent().parent().attr("id"));
-        // console.log($("#snake-head").parent())
     })
 }
       
@@ -210,13 +208,15 @@ controls();
 
 // placing coin on the map
 
-// $("#row15column3 .holder").append("<div id='coin'></div>")
+$("#row1column9 .holder").append("<div class='coin'></div>")
+$("#row1column11 .holder").append("<div class='coin'></div>")
+$("#row1column13 .holder").append("<div class='coin'></div>")
 
 // placing walls on the map
 
 // $("#row7column3 .holder").append("<div class='breakable-wall'></div>")
 
-coinPosition = $("#coin").parent().parent().attr("id");
+coinPosition = $(".coin").parent().parent().attr("id");
 
 const gameOver = () => {
     $(".grid").empty();
@@ -227,24 +227,10 @@ const gameOver = () => {
     $(".grid").append(`<h3>You got a score of ${score}.</h3>`);
 }
 
-
-const newCoinPosition = () => {
-    const randomRow = Math.floor(Math.random() * (maxWidth +1));
-    const randomColumn = Math.floor(Math.random() * (maxHeight+1));
-    coinPosition = "row" + randomRow + "column" + randomColumn;
-    if("#" + coinPosition === newPosition){
-        newCoinPosition();
-    }
-    else {$(`#${coinPosition} .holder`).append("<div id='coin'></div>")}
-}
-
-const scoreCounter = () => {
-    if("#" + coinPosition === newPosition){
+const coinCheck = () => {
+    if($("#snake-head").siblings().is(".coin")){
         score++;
-        $("#coin").remove();
-        newCoinPosition();
-        // $(".score").empty();
-        // $(".score").html(`<div class='score'>${score}</score>`);
+        $(`${newPosition} .coin`).remove();
     }
 }
 
