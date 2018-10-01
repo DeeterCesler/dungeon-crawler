@@ -404,25 +404,25 @@ class Enemy {
             $(`#row${this.y}column${this.x} .enemy`).remove();
             if(this.direction === "left"){
                 this.y--;
-                if($(`#row${this.y}column${this.x} .holder .breakable-wall`).length || $(`#row${this.y}column${this.x} .holder .wall`).length){
+                if($(`#row${this.y}column${this.x} .holder .breakable-wall`).length || $(`#row${this.y}column${this.x} .holder .wall`).length || $(`#row${this.y}column${this.x} .holder .enemy`).length || $(`#row${this.y}column${this.x} .holder .escape`).length) {
                     this.y++;
                 }
             }
             if(this.direction === "right"){
                 this.y++;
-                if($(`#row${this.y}column${this.x} .holder .breakable-wall`).length || $(`#row${this.y}column${this.x} .holder .wall`).length){
+                if($(`#row${this.y}column${this.x} .holder .breakable-wall`).length || $(`#row${this.y}column${this.x} .holder .wall`).length || $(`#row${this.y}column${this.x} .holder .enemy`).length || $(`#row${this.y}column${this.x} .holder .escape`).length) {
                     this.y--;
                 }
             }
             if(this.direction === "up"){
                 this.x--;
-                if($(`#row${this.y}column${this.x} .holder .breakable-wall`).length || $(`#row${this.y}column${this.x} .holder .wall`).length){
+                if($(`#row${this.y}column${this.x} .holder .breakable-wall`).length || $(`#row${this.y}column${this.x} .holder .wall`).length || $(`#row${this.y}column${this.x} .holder .enemy`).length || $(`#row${this.y}column${this.x} .holder .escape`).length) {
                     this.x++;
                 }
             }
             if(this.direction === "down"){
                 this.x++;
-                if($(`#row${this.y}column${this.x} .holder .breakable-wall`).length || $(`#row${this.y}column${this.x} .holder .wall`).length){
+                if($(`#row${this.y}column${this.x} .holder .breakable-wall`).length || $(`#row${this.y}column${this.x} .holder .wall`).length || $(`#row${this.y}column${this.x} .holder .enemy`).length || $(`#row${this.y}column${this.x} .holder .escape`).length) {
                     this.x--;
                 }
             }
@@ -448,8 +448,17 @@ const baddo2 = new Enemy(9,10);
 baddo2move = setInterval(function(){
     baddo2.move();
     if($(`#row${baddo2.y}column${baddo2.x} .enemy`).length > 0){
-        console.log("baddo1 alive")
+        console.log("baddo2 alive")
         baddo2move;
+    }
+}, 1500);
+
+const baddo3 = new Enemy(12,10);
+baddo3move = setInterval(function(){
+    baddo3.move();
+    if($(`#row${baddo3.y}column${baddo3.x} .enemy`).length > 0){
+        console.log("baddo3 alive")
+        baddo3move;
     }
 }, 1500);
 
