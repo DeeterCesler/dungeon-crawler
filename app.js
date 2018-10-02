@@ -256,6 +256,11 @@ const gameOver = () => {
     $(".grid").append(`<h3>You got to level ${level}.</h3>`);
     $(".grid").append(`<h3>You killed ${enemiesKilled} enemies.</h3>`);
     $(".grid").append(`<h3>You got a score of ${score}.</h3>`);
+    $(".grid").append(`<br/><br/><button class="start-game">Play again?</button>`);
+    $(".start-game").on("click", function(){
+        $(".grid").empty();
+        stage1();  
+    })
 }
 
 const coinCheck = () => {
@@ -462,7 +467,11 @@ const stage1 = () => {
     // $("body").append("<audio autoplay><source src='sounds/music.mp3'></audio>")
 };
 
-stage1();
+$(".grid").append(`<br/><button class="start-game">Start</button>`);
+    $(".start-game").on("click", function(){
+        $(".grid").empty();
+        stage1();  
+    })
 
 const stage2 = ()=>{
     // // top row

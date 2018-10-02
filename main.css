@@ -2,6 +2,20 @@ body {
     background-color: black;
 }
 
+button {
+    background-color: #ff3300;
+    color: aliceblue;
+    font-family: 'Tillana', cursive;
+    font-size: 1em;
+    border-radius: 10px;
+    /* height: 50px; */
+    width: 100px;
+}
+
+button:hover {
+    background-color: #ff5c33;
+}
+
 .wrapper {
     text-align: center;
     font-family: 'Tillana', cursive;
