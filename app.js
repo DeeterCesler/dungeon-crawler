@@ -21,7 +21,7 @@ const buildGrid = (height, width) => {
 
 const imageFill = () => {
     $(".coin").append("<img src='img/coin.png'>");
-    $(".enemy").append("<img src='img/skeleton'>");
+    $(".enemy").append("<img class='skelly' src='img/skeleton'>");
     $(".wall").append("<img src='img/wall.png'>");
     $(".breakable-wall").append("<img src='img/broken-wall.png'>");
     $(".escape").append("<img src='img/door.png'>");
@@ -39,6 +39,7 @@ let level = 1;
 let enemiesKilled = 0;
 let newEnemyPosition;
 let escapePosition;
+let newPosition;
 
 // ============
 // UNUSED TIMER
@@ -199,25 +200,54 @@ const controls = () => {
         if(keyName === "d"){
             moveRight();
         }
-        if(keyName === "a"){
+        else if(keyName === "a"){
             moveLeft();
         }
-        if(keyName === "w"){
+        else if(keyName === "w"){
             moveUp();
         }
-        if(keyName === "s"){
+        else if(keyName === "s"){
             moveDown();
         }
-        if(keyName === " "){
+        else if(keyName === " "){
             hero.attack();
         }
         coinCheck();
         escapeCheck();
         enemyCheck();
     })
+    document.onkeydown = function(event){
+        switch (event.keyCode){
+            case 37:
+            moveLeft();
+            coinCheck();
+            escapeCheck();
+            enemyCheck();
+            break;
+        case 38:
+            moveUp();
+            coinCheck();
+            escapeCheck();
+            enemyCheck();
+            break;
+        case 39:
+            moveRight();
+            coinCheck();
+            escapeCheck();
+            enemyCheck();
+            break;
+        case 40:
+            moveDown();
+            coinCheck();
+            escapeCheck();
+            enemyCheck();
+            break;
+        }
+    }
+    coinCheck();
+    escapeCheck();
+    enemyCheck();
 }
-      
-controls();
 
 const gameOver = () => {
     $(".grid").empty();
@@ -259,6 +289,8 @@ const escapeCheck = () => {
         }
     }
 };
+
+controls();
 
 // =============================================================
 // ==================== USER INSTRUCTIONS ======================
@@ -326,9 +358,11 @@ class Enemy {
             // new position
             let newEnemyPosition = "#row" + this.y + "column" + this.x;
             $(`${newEnemyPosition} .holder`).append(`<div class='enemy' id='baddo${this.y}${this.x}'></div>`);
+            if($(`.enemy`).siblings().is("#sword")){
+                $(`#sword`).remove();
+            }
             $(".enemy").append("<img class='skelly' src='img/skeleton'>");
             if(newEnemyPosition === "#" + $("#snake-head").parent().parent().attr("id")){
-                console.log("samesies");
                 gameOver();
             }
         }
@@ -360,7 +394,7 @@ const stage1 = () => {
     buildGrid(20,20);
 
     // establish hero
-    let newPosition = "#row0column0";
+    newPosition = "#row0column0";
     $(`${newPosition} .holder`).append("<div id='snake-head'><img src='img/arrow-right.jpg'></div>");
 
 
@@ -431,7 +465,7 @@ const stage1 = () => {
         $(`#row${i}column16 .holder`).append("<div class='wall'></div>")
     }
     // escape door - normally at row18col18
-    escapePosition = "#row1column1 .holder";
+    escapePosition = "#row18column18 .holder";
     $(escapePosition).append("<div class='escape'></div>")
     imageFill();
 };
@@ -505,7 +539,6 @@ const stage2 = ()=>{
     baddo4move = setInterval(function(){
     baddo4.move();
     if($(`#row${baddo4.y}column${baddo4.x} .enemy`).length > 0){
-        console.log("baddo4 alive")
         baddo4move;
     }
     }, 1500);
@@ -515,7 +548,6 @@ const stage2 = ()=>{
     baddo5move = setInterval(function(){
     baddo5.move();
     if($(`#row${baddo5.y}column${baddo5.x} .enemy`).length > 0){
-        console.log("baddo4 alive")
         baddo5move;
     }
     }, 1500);
@@ -525,7 +557,6 @@ const stage2 = ()=>{
     baddo6move = setInterval(function(){
     baddo6.move();
     if($(`#row${baddo6.y}column${baddo6.x} .enemy`).length > 0){
-        console.log("baddo4 alive")
         baddo6move;
     }
     }, 1500);
@@ -535,7 +566,6 @@ const stage2 = ()=>{
     baddo7move = setInterval(function(){
     baddo7.move();
     if($(`#row${baddo7.y}column${baddo7.x} .enemy`).length > 0){
-        console.log("baddo4 alive")
         baddo7move;
     }
     }, 1500);
@@ -548,7 +578,6 @@ const stage2 = ()=>{
     baddo8move = setInterval(function(){
     baddo8.move();
     if($(`#row${baddo8.y}column${baddo8.x} .enemy`).length > 0){
-        console.log("baddo4 alive")
         baddo8move;
     }
     }, 1500);
@@ -557,7 +586,6 @@ const stage2 = ()=>{
     baddo9move = setInterval(function(){
     baddo9.move();
     if($(`#row${baddo9.y}column${baddo9.x} .enemy`).length > 0){
-        console.log("baddo4 alive")
         baddo9move;
     }
     }, 1500);
@@ -566,7 +594,6 @@ const stage2 = ()=>{
     baddo10move = setInterval(function(){
     baddo10.move();
     if($(`#row${baddo10.y}column${baddo10.x} .enemy`).length > 0){
-        console.log("baddo4 alive")
         baddo10move;
     }
     }, 1500);
@@ -577,3 +604,79 @@ const stage2 = ()=>{
     $(escapePosition).append("<div class='escape'></div>")
     imageFill();
 };
+
+class NewEnemy {
+    constructor(x, y){
+        this.x = x;
+        this.y = y;
+        // this.movingInterval = moving;
+        $(`#row${y}column${x} .holder`).append("<div class='enemy'></div>");
+    }
+    movingInterval() {
+        console.log(this);
+        setInterval(function(){
+            // find a random direction
+            const randomDirectionNum = Math.floor(Math.random() * 4);
+            if(randomDirectionNum === 3){
+                this.direction = "up"
+            }
+            if(randomDirectionNum === 2){
+                this.direction = "down"
+            }
+            if(randomDirectionNum === 1){
+                this.direction = "left"
+            }
+            if(randomDirectionNum === 0){
+                this.direction = "right"
+            }
+            // move the skeleton based on the random direction
+            if($(`#row${this.y}column${this.x} .enemy`).length > 0){
+                $(".skelly").remove();
+                $(`#row${this.y}column${this.x} .enemy`).remove();
+                // these checks make sure the enemies don't walk through a wall, coin, escape portal, or off the map
+                if(this.direction === "left"){
+                    this.y--;
+                    if($(`#row${this.y}column${this.x} .holder .breakable-wall`).length || $(`#row${this.y}column${this.x} .holder .wall`).length || $(`#row${this.y}column${this.x} .holder .enemy`).length || $(`#row${this.y}column${this.x} .holder .escape`).length || $(`#row${this.y}column${this.x} .holder .coin`).length || this.y < 0 || this.x === (maxWidth+1)) {
+                        this.y++;
+                    }
+                }
+                if(this.direction === "right"){
+                    this.y++;
+                    if($(`#row${this.y}column${this.x} .holder .breakable-wall`).length || $(`#row${this.y}column${this.x} .holder .wall`).length || $(`#row${this.y}column${this.x} .holder .enemy`).length || $(`#row${this.y}column${this.x} .holder .escape`).length || $(`#row${this.y}column${this.x} .holder .coin`).length || this.y === (maxHeight+1) || this.x === (maxWidth+1)) {
+                        this.y--;
+                    }
+                }
+                if(this.direction === "up"){
+                    this.x--;
+                    if($(`#row${this.y}column${this.x} .holder .breakable-wall`).length || $(`#row${this.y}column${this.x} .holder .wall`).length || $(`#row${this.y}column${this.x} .holder .enemy`).length || $(`#row${this.y}column${this.x} .holder .escape`).length || $(`#row${this.y}column${this.x} .holder .coin`).length || this.y === (maxHeight+1) || this.x < 0 ) {
+                        this.x++;
+                    }
+                }
+                if(this.direction === "down"){
+                    this.x++;
+                    if($(`#row${this.y}column${this.x} .holder .breakable-wall`).length || $(`#row${this.y}column${this.x} .holder .wall`).length || $(`#row${this.y}column${this.x} .holder .enemy`).length || $(`#row${this.y}column${this.x} .holder .escape`).length || $(`#row${this.y}column${this.x} .holder .coin`).length || this.y === (maxHeight+1) || this.x === (maxWidth+1)) {
+                        this.x--;
+                    }
+                }
+                // new position
+                    let newEnemyPosition = "#row" + this.y + "column" + this.x;
+                    $(`${newEnemyPosition} .holder`).append(`<div class='enemy' id='baddo${this.y}${this.x}'></div>`);
+                    $(".enemy").append("<img class='skelly' src='img/skeleton'>");
+                    if(newEnemyPosition === "#" + $("#snake-head").parent().parent().attr("id")){
+                        console.log("samesies");
+                        gameOver();
+                    }
+                if($(`#row${this.y}column${this.x} .enemy`).length > 0){
+                    movingInterval;
+                }
+            }
+        }, 1500);
+    }
+};
+
+const stage3 = () => {
+    const testEnemy = new NewEnemy(14, 14);
+    testEnemy.movingInterval();
+
+    imageFill();
+}
