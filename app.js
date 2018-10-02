@@ -258,6 +258,11 @@ const gameOver = () => {
     $(".grid").append(`<h3>You got a score of ${score}.</h3>`);
     $(".grid").append(`<br/><br/><button class="start-game">Play again?</button>`);
     $(".start-game").on("click", function(){
+        hero.x = 0;
+        hero.y = 0;
+        level = 1;
+        enemiesKilled = 0;
+        score = 0;
         $(".grid").empty();
         stage1();  
     })
