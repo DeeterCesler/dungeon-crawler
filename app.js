@@ -456,9 +456,10 @@ const stage1 = () => {
         $(`#row${i}column16 .holder`).append("<div class='wall'></div>")
     }
     // escape door - normally at row18col18
-    escapePosition = "#row1column1 .holder";
+    escapePosition = "#row18column18 .holder";
     $(escapePosition).append("<div class='escape'></div>")
     imageFill();
+    // $("body").append("<audio autoplay><source src='sounds/music.mp3'></audio>")
 };
 
 stage1();
@@ -549,7 +550,7 @@ const stage2 = ()=>{
     const baddo10 = new Enemy(13,13);
 
     // escape door
-    escapePosition = "#row1column1 .holder";
+    escapePosition = "#row18column18 .holder";
     $(escapePosition).append("<div class='escape'></div>")
 
     imageFill();
