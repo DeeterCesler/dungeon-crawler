@@ -83,13 +83,46 @@ const hero = {
                 // this if check exists so that if someone attacks twice really quickly,
                 // the sword won't show up twice in the same block
                 else if($(`${swordLocation} #sword`).length === 0){
-                    $("body").append("<audio autoplay><source src='sounds/swoosh.mp3'></audio>")
-                    $(swordLocation).append("<img id='sword' src='img/sword.png'>");
-                    // sword in front of you
-                    setTimeout(function(){
-                        // function to remove sword
-                        $(`#sword`).remove();
-                    }, 250);
+                    // if direction is up
+                    if(this.direction === "up"){
+                        $("body").append("<audio autoplay><source src='sounds/swoosh.mp3'></audio>")
+                        $(swordLocation).append("<img id='sword' src='img/sword-up.png'>");
+                        // sword in front of you
+                        setTimeout(function(){
+                            // function to remove sword
+                            $(`#sword`).remove();
+                        }, 250);
+                    }
+                    // if direction is down
+                    if(this.direction === "down"){
+                        $("body").append("<audio autoplay><source src='sounds/swoosh.mp3'></audio>")
+                        $(swordLocation).append("<img id='sword' src='img/sword-down.png'>");
+                        // sword in front of you
+                        setTimeout(function(){
+                            // function to remove sword
+                            $(`#sword`).remove();
+                        }, 250);
+                    }
+                    // if direction is left
+                    if(this.direction === "left"){
+                        $("body").append("<audio autoplay><source src='sounds/swoosh.mp3'></audio>")
+                        $(swordLocation).append("<img id='sword' src='img/sword-left.png'>");
+                        // sword in front of you
+                        setTimeout(function(){
+                            // function to remove sword
+                            $(`#sword`).remove();
+                        }, 250);
+                    }
+                    // if direction is right
+                    if(this.direction === "right"){
+                        $("body").append("<audio autoplay><source src='sounds/swoosh.mp3'></audio>")
+                        $(swordLocation).append("<img id='sword' src='img/sword-right.png'>");
+                        // sword in front of you
+                        setTimeout(function(){
+                            // function to remove sword
+                            $(`#sword`).remove();
+                        }, 250);
+                    }
                 }
             }
         }
