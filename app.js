@@ -286,6 +286,10 @@ const escapeCheck = () => {
             clearStage();
             stage3();
         }
+        if(level === 4){
+            clearStage();
+            stage4();
+        }
     }
 };
 
@@ -408,13 +412,8 @@ const stage1 = () => {
     // making enemies
     const stage1enemies = () => {
         const baddo1 = new Enemy(9,8);
-        baddo1.move;
-    
         const baddo2 = new Enemy(9,10);
-        baddo2.move;
-    
         const baddo3 = new Enemy(12,10);
-        baddo3.move;
     }
     
     stage1enemies();
@@ -528,43 +527,77 @@ const stage2 = ()=>{
 
     // caged enemy
     const baddo4 = new Enemy(9,4);
-    baddo4.move;
 
     // enemy next to escape
     const baddo5 = new Enemy(17,17);
-    baddo5.move;
 
     // enemy in bottom left corner
     const baddo6 = new Enemy(0,maxHeight);
-    baddo6.move;
 
     // enemy in top right corner
     const baddo7 = new Enemy(maxWidth,0);
-    baddo7.move;
+    // baddo7.move;
     $("#row0column18 .holder").append("<div class='coin'></div>")
     $("#row1column18 .holder").append("<div class='coin'></div>")
     $("#row1column19 .holder").append("<div class='coin'></div>")
 
     // enemies in center
     const baddo8 = new Enemy(5,13);
-    baddo8.move;
 
     const baddo9 = new Enemy(9,13);
-    baddo9.move;
 
     const baddo10 = new Enemy(13,13);
-    baddo10.move;
 
     // escape door
     escapePosition = "#row1column1 .holder";
     $(escapePosition).append("<div class='escape'></div>")
+
     imageFill();
 };
 
 
 const stage3 = () => {
-    const testEnemy = new Enemy(4, 4);
-    testEnemy.move;
+
+    // create and fill out array
+    const testArray = [];
+    for(let i=11; i<=65; i++){
+        testArray.push(`baddo${i}`);
+    }
+    
+    // populate map with enemies
+    for(let i = 1; i<=10; i++){
+        testArray[i] = new Enemy(i+3, i+2)
+    }
+
+    for(let i = 11; i<=21; i++){
+        testArray[i] = new Enemy(i+2, i+3)
+    }
+
+    for(let i = 22; i<=31; i++){
+        testArray[i] = new Enemy(i-15, 0)
+    }
+
+    for(let i = 32; i<=45; i++){
+        testArray[i] = new Enemy(0, i-25)
+    }
+
+    for(let i = 46; i<=55; i++){
+        testArray[i] = new Enemy(i-40, maxHeight)
+    }
+
+    for(let i = 56; i<=65; i++){
+        testArray[i] = new Enemy(maxWidth, i-50)
+    }
+
+    // escape door
+    escapePosition = "#row18column18 .holder";
+    $(escapePosition).append("<div class='escape'></div>")
 
     imageFill();
+}
+
+const stage4 = () => {
+    gameOver();
+
+    $(".grid").prepend("<br/><h1>YOU WIN</h1><br/>")
 }
