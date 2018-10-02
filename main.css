@@ -30,7 +30,6 @@ div {
 }
 
 .cell {
-    background-color: blue;
     display: inline-block;
     background-image: url("img/dirt-floor.png");
     background-size: contain;
@@ -42,17 +41,12 @@ div {
 
 
 #snake-head{
-    /* background-color: green; */
     position: relative;
 }
 
 .wall, .breakable-wall, .coin, #snake-head, .holder, .enem, .escape, .cell{
     height: 20px;
     width: 20px;
-}
-
-.breakable-wall{
-    background-color: green;
 }
 
 .wall{

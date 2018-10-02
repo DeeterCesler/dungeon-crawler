@@ -91,7 +91,7 @@ const hero = {
                         setTimeout(function(){
                             // function to remove sword
                             $(`#sword`).remove();
-                        }, 250);
+                        }, 100);
                     }
                     // if direction is down
                     if(this.direction === "down"){
@@ -101,7 +101,7 @@ const hero = {
                         setTimeout(function(){
                             // function to remove sword
                             $(`#sword`).remove();
-                        }, 250);
+                        }, 100);
                     }
                     // if direction is left
                     if(this.direction === "left"){
@@ -111,7 +111,7 @@ const hero = {
                         setTimeout(function(){
                             // function to remove sword
                             $(`#sword`).remove();
-                        }, 250);
+                        }, 100);
                     }
                     // if direction is right
                     if(this.direction === "right"){
@@ -121,7 +121,7 @@ const hero = {
                         setTimeout(function(){
                             // function to remove sword
                             $(`#sword`).remove();
-                        }, 250);
+                        }, 100);
                     }
                 }
             }
@@ -229,16 +229,16 @@ const moveDown = () => {
 const controls = () => {
     document.addEventListener('keypress', (event) => {
         const keyName = event.key;
-        if(keyName === "d"){
+        if(keyName === "d" || keyName === "D"){
             moveRight();
         }
-        else if(keyName === "a"){
+        else if(keyName === "a" || keyName === "A"){
             moveLeft();
         }
-        else if(keyName === "w"){
+        else if(keyName === "w" || keyName === "W"){
             moveUp();
         }
-        else if(keyName === "s"){
+        else if(keyName === "s" || keyName === "S"){
             moveDown();
         }
         else if(keyName === " "){
@@ -252,33 +252,21 @@ const controls = () => {
         switch (event.keyCode){
             case 37:
             moveLeft();
-            coinCheck();
-            escapeCheck();
-            enemyCheck();
             break;
         case 38:
             moveUp();
-            coinCheck();
-            escapeCheck();
-            enemyCheck();
             break;
         case 39:
             moveRight();
-            coinCheck();
-            escapeCheck();
-            enemyCheck();
             break;
         case 40:
             moveDown();
-            coinCheck();
-            escapeCheck();
-            enemyCheck();
             break;
         }
+        coinCheck();
+        escapeCheck();
+        enemyCheck();
     }
-    coinCheck();
-    escapeCheck();
-    enemyCheck();
 }
 
 const gameOver = () => {
@@ -325,18 +313,16 @@ const escapeCheck = () => {
             clearStage();
             stage2();
         }
-        if(level === 3){
+        else if(level === 3){
             clearStage();
             stage3();
         }
-        if(level === 4){
+        else if(level === 4){
             clearStage();
             stage4();
         }
     }
 };
-
-controls();
 
 // =============================================================
 // ==================== USER INSTRUCTIONS ======================
@@ -444,6 +430,7 @@ const clearStage = () => {
 };
 
 const stage1 = () => {
+    controls();
     // building grid
     buildGrid(20,20);
 
@@ -505,18 +492,8 @@ const stage1 = () => {
     // $("body").append("<audio autoplay><source src='sounds/music.mp3'></audio>")
 };
 
-$(".grid").append(`<br/><button class="start-game">Start</button>`);
-    $(".start-game").on("click", function(){
-        $(".grid").empty();
-        stage1();  
-    })
-
 const stage2 = ()=>{
-    // // top row
-    // for(let i=0; i<17; i++){
-    //     $(`#row${i}column3 .holder`).append("<div class='wall'></div>")
-    // };
-    // next row 
+    // middle row
     for(let i=(maxWidth-1); i>9; i--){
         $(`#row${i}column1 .holder`).append("<div class='wall'></div>")
     };
@@ -531,37 +508,32 @@ const stage2 = ()=>{
         $(`#row8column${i} .holder`).append("<div class='wall'></div>")
     }
     // breakable cage
-        for(let i=7; i<11; i++){
-            $(`#row2column${i} .holder`).append("<div class='breakable-wall'></div>")
-        }
-        for(let i=2; i<6; i++){
-            $(`#row${i}column11 .holder`).append("<div class='breakable-wall'></div>")
-        }
-        for(let i=3; i<6; i++){
-            $(`#row${i}column7 .holder`).append("<div class='breakable-wall'></div>")
-        }
-        for(let i=7; i<12; i++){
-            $(`#row6column${i} .holder`).append("<div class='breakable-wall'></div>")
-        }
-        // cage coins
-        $("#row3column8 .holder").append("<div class='coin'></div>")
-        $("#row3column9 .holder").append("<div class='coin'></div>")
-        $("#row3column10 .holder").append("<div class='coin'></div>")
-        $("#row4column8 .holder").append("<div class='coin'></div>")
-        $("#row4column10 .holder").append("<div class='coin'></div>")
-        $("#row5column8 .holder").append("<div class='coin'></div>")
-        $("#row5column9 .holder").append("<div class='coin'></div>")
-        $("#row5column10 .holder").append("<div class='coin'></div>")
-
-        // wall coins
-        for(let i=(maxWidth-1); i>9; i--){
-            $(`#row${i}column0 .holder`).append("<div class='coin'></div>")
-        };
-        for(let i=1; i<12; i++){
-            $(`#row19column${i} .holder`).append("<div class='coin'></div>")
-        };
-
-
+    for(let i=7; i<11; i++){
+        $(`#row2column${i} .holder`).append("<div class='breakable-wall'></div>")
+    }
+    for(let i=2; i<6; i++){
+        $(`#row${i}column11 .holder`).append("<div class='breakable-wall'></div>")
+    }
+    for(let i=3; i<6; i++){
+        $(`#row${i}column7 .holder`).append("<div class='breakable-wall'></div>")
+    }
+    for(let i=7; i<12; i++){
+        $(`#row6column${i} .holder`).append("<div class='breakable-wall'></div>")
+    }
+    // cage coins
+    for(let i=3; i<=5; i++){
+        $(`#row${i}column8 .holder`).append("<div class='coin'></div>");
+        $(`#row${i}column10 .holder`).append("<div class='coin'></div>");
+    }
+    $(`#row3column9 .holder`).append("<div class='coin'></div>");
+    $(`#row5column9 .holder`).append("<div class='coin'></div>");
+    // wall coins
+    for(let i=(maxWidth-1); i>9; i--){
+        $(`#row${i}column0 .holder`).append("<div class='coin'></div>")
+    };
+    for(let i=1; i<12; i++){
+        $(`#row19column${i} .holder`).append("<div class='coin'></div>")
+    };
     // walled-in escape - top wall
     for(let i=16; i<21; i++){
         $(`#row16column${i} .holder`).append("<div class='breakable-wall'></div>")
@@ -570,8 +542,6 @@ const stage2 = ()=>{
     for(let i=17; i<21; i++){
         $(`#row${i}column16 .holder`).append("<div class='breakable-wall'></div>")
     }
-
-    // make enemies
 
     // caged enemy
     const baddo4 = new Enemy(9,4);
@@ -582,18 +552,15 @@ const stage2 = ()=>{
     // enemy in bottom left corner
     const baddo6 = new Enemy(0,maxHeight);
 
-    // enemy in top right corner
+    // enemy in top right corner, penned in by coins
     const baddo7 = new Enemy(maxWidth,0);
-    // baddo7.move;
     $("#row0column18 .holder").append("<div class='coin'></div>")
     $("#row1column18 .holder").append("<div class='coin'></div>")
     $("#row1column19 .holder").append("<div class='coin'></div>")
 
     // enemies in center
     const baddo8 = new Enemy(5,13);
-
     const baddo9 = new Enemy(9,13);
-
     const baddo10 = new Enemy(13,13);
 
     // escape door
@@ -603,38 +570,37 @@ const stage2 = ()=>{
     imageFill();
 };
 
-
 const stage3 = () => {
 
-    // create and fill out array
-    const testArray = [];
+    // create and fill out enemy array
+    const enemyArray = [];
     for(let i=11; i<=65; i++){
-        testArray.push(`baddo${i}`);
+        enemyArray.push(`baddo${i}`);
     }
     
     // populate map with enemies
     for(let i = 1; i<=10; i++){
-        testArray[i] = new Enemy(i+3, i+2)
+        enemyArray[i] = new Enemy(i+3, i+2)
     }
 
     for(let i = 11; i<=21; i++){
-        testArray[i] = new Enemy(i+2, i+3)
+        enemyArray[i] = new Enemy(i+2, i+3)
     }
 
     for(let i = 22; i<=31; i++){
-        testArray[i] = new Enemy(i-15, 0)
+        enemyArray[i] = new Enemy(i-15, 0)
     }
 
     for(let i = 32; i<=45; i++){
-        testArray[i] = new Enemy(0, i-25)
+        enemyArray[i] = new Enemy(0, i-25)
     }
 
     for(let i = 46; i<=55; i++){
-        testArray[i] = new Enemy(i-40, maxHeight)
+        enemyArray[i] = new Enemy(i-40, maxHeight)
     }
 
     for(let i = 56; i<=65; i++){
-        testArray[i] = new Enemy(maxWidth, i-50)
+        enemyArray[i] = new Enemy(maxWidth, i-50)
     }
 
     // escape door
@@ -649,3 +615,13 @@ const stage4 = () => {
 
     $(".grid").prepend("<br/><h1>YOU WIN</h1><br/>")
 }
+
+// =========================================================
+// ==================== START BUTTON =======================
+// =========================================================
+
+$(".grid").append(`<br/><button class="start-game">Start</button>`);
+    $(".start-game").on("click", function(){
+        $(".grid").empty();
+        stage1();  
+    })
