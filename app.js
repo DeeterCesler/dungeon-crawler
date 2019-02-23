@@ -430,7 +430,6 @@ const clearStage = () => {
 };
 
 const stage1 = () => {
-    controls();
     // building grid
     buildGrid(20,20);
 
@@ -619,7 +618,7 @@ const stage4 = () => {
 // =========================================================
 // ==================== START BUTTON =======================
 // =========================================================
-
+controls();
 $(".grid").append(`<br/><button class="start-game">Start</button>`);
     $(".start-game").on("click", function(){
         $(".grid").empty();
