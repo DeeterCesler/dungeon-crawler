@@ -1,6 +1,8 @@
 # Dungeon Crawler
 Crawl through a dungeon. Slay enemies. Find treasure.
 
+Play the [live demo](http://dungeon-crawler.freeoda.com/).
+
 ### Wireframe
 ![Stage 1](https://i.imgur.com/gHrv9N2.png)
 ![Stage 2](https://i.imgur.com/NYypZhl.png)
